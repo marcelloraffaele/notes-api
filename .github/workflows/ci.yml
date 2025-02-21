@@ -37,6 +37,8 @@ jobs:
         run: mvn verify
 
       - name: Login to GHCR
+# don't exec during PRs
+        if: github.event_name == 'push'
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
@@ -44,6 +46,8 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push Docker image
+# don't exec during PRs
+        if: github.event_name == 'push'
         uses: docker/build-push-action@v2
         with:
           context: .
