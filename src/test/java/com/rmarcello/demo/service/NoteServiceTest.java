@@ -83,4 +83,22 @@ class NoteServiceTest {
         assertTrue(notes.contains(note1));
         assertTrue(notes.contains(note3));
     }
+
+    @Test
+    void testUpdate() {
+        Note note1 = new Note(1, "Title1", "Content1", Arrays.asList("Label1"), Arrays.asList("URL1"));
+        noteService.add(note1);
+
+        Note updatedNote = new Note(1, "Updated Title", "Updated Content", Arrays.asList("Updated Label"), Arrays.asList("Updated URL"));
+        Note result = noteService.update(1, updatedNote);
+
+        assertNotNull(result);
+        assertEquals("Updated Title", result.getTitle());
+        assertEquals("Updated Content", result.getContent());
+        assertEquals(Arrays.asList("Updated Label"), result.getLabels());
+        assertEquals(Arrays.asList("Updated URL"), result.getUrls());
+
+        Note notFoundNote = noteService.update(2, updatedNote);
+        assertNull(notFoundNote);
+    }
 }

@@ -38,8 +38,8 @@ curl -X PUT http://localhost:8080/notes/1 \
     -H "Content-Type: application/json" \
     -d '{
         "id": 1,
-        "title": "Sample Note",
-        "content": "This is a sample note.",
+        "title": "Updated Sample Note",
+        "content": "This is an updated sample note.",
         "labels": ["sample", "ai", "blue"],
         "urls": ["http://another.com"]
     }'

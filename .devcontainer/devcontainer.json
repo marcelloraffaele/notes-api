@@ -18,7 +18,10 @@
 				"GitHub.copilot"
 			]
 		}
-	}
+  },
+  "tasks": {
+    "build": "mvn install"
+  }
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],

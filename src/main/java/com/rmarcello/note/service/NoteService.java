@@ -37,4 +37,16 @@ public class NoteService {
                 .filter(note -> note.getLabels().contains(label))
                 .collect(Collectors.toList());
     }
+
+    public Note update(int id, Note updatedNote) {
+        Note existingNote = getById(id);
+        if (existingNote == null) {
+            return null;
+        }
+        existingNote.setTitle(updatedNote.getTitle());
+        existingNote.setContent(updatedNote.getContent());
+        existingNote.setLabels(updatedNote.getLabels());
+        existingNote.setUrls(updatedNote.getUrls());
+        return existingNote;
+    }
 }
