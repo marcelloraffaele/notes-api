@@ -28,8 +28,6 @@ curl -X GET http://localhost:8080/notes/1
 ### delete a note
 curl -X DELETE http://localhost:8080/notes/1
 
-# un implemented functions
-
 ### search notes
 curl -X GET http://localhost:8080/notes/label/green
 

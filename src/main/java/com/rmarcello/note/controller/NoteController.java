@@ -46,6 +46,11 @@ public class NoteController {
         noteService.remove(id);
     }
 
+    @GetMapping("/label/{label}")
+    public List<Note> getNotesByLabel(@PathVariable String label) {
+        return noteService.getByLabel(label);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Note> updateNote(@PathVariable int id, @RequestBody Note note) {
         Note updatedNote = noteService.update(id, note);
@@ -54,4 +59,5 @@ public class NoteController {
         }
         return new ResponseEntity<>(updatedNote, HttpStatus.OK);
     }
+
 }
