@@ -16,12 +16,12 @@ To run the application from the command line, follow these steps:
 
 2. Build the project using Maven:
    ```sh
-   ./mvnw clean install
+   ./mvn clean install
    ```
 
 3. Run the Spring Boot application:
    ```sh
-   ./mvnw spring-boot:run
+   ./mvn spring-boot:run
    ```
 
 The application will start and be accessible at `http://localhost:8080`.
