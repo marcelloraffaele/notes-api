@@ -8,8 +8,9 @@ public class Note implements Comparable<Note> {
     private String content;
     private List<String> labels;
     private List<String> urls;
+    private String color; // P9ed3
 
-    public Note(int id, String title, String content, List<String> labels, List<String> urls) {
+    public Note(int id, String title, String content, List<String> labels, List<String> urls, String color) { // Pbb5e
         this.id = id;
         this.title = title;
         this.content = content;
@@ -23,7 +24,7 @@ public class Note implements Comparable<Note> {
         } else {
             this.urls = urls;
         }
-        
+        this.color = color; // Pbb5e
     }
 
     public int getId() {
@@ -66,6 +67,14 @@ public class Note implements Comparable<Note> {
         this.urls = urls;
     }
 
+    public String getColor() { // Pab1e
+        return color;
+    }
+
+    public void setColor(String color) { // Pab1e
+        this.color = color;
+    }
+
     @Override
     public String toString() {
         return "Note{" +
@@ -74,6 +83,7 @@ public class Note implements Comparable<Note> {
                 ", content='" + content + '\'' +
                 ", labels=" + labels +
                 ", urls=" + urls +
+                ", color='" + color + '\'' + // Pd1a7
                 '}';
     }
 

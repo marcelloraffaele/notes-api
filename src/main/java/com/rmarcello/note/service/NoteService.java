@@ -47,6 +47,7 @@ public class NoteService {
         existingNote.setContent(updatedNote.getContent());
         existingNote.setLabels(updatedNote.getLabels());
         existingNote.setUrls(updatedNote.getUrls());
+        existingNote.setColor(updatedNote.getColor());
         return existingNote;
     }
 }
