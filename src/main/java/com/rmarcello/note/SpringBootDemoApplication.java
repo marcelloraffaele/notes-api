@@ -21,10 +21,10 @@ public class SpringBootDemoApplication {
     CommandLineRunner init(NoteService noteService) {
         return args -> {
             // Sample data
-			noteService.add(new Note(1, "Meeting Notes", "Discuss project milestones and deadlines.", List.of("meeting", "project"), List.of("https://example.com/meeting1", "https://example.com/meeting2")));
-			noteService.add(new Note(2, "Shopping List", "Buy groceries for the week.", List.of("personal", "shopping"), List.of("https://example.com/groceries")));
-			noteService.add(new Note(3, "Workout Plan", "Weekly workout schedule.", List.of("fitness", "health"), List.of("https://example.com/workout")));
-			noteService.add(new Note(4, "Book Recommendations", "List of books to read.", List.of("reading", "books"), List.of("https://example.com/books1", "https://example.com/books2")));
+			noteService.add(new Note(1, "Meeting Notes", "Discuss project milestones and deadlines.", List.of("meeting", "project"), List.of("https://example.com/meeting1", "https://example.com/meeting2"), "#FF5733"));
+			noteService.add(new Note(2, "Shopping List", "Buy groceries for the week.", List.of("personal", "shopping"), List.of("https://example.com/groceries"), "#28A745"));
+			noteService.add(new Note(3, "Workout Plan", "Weekly workout schedule.", List.of("fitness", "health"), List.of("https://example.com/workout"), "#007BFF"));
+			noteService.add(new Note(4, "Book Recommendations", "List of books to read.", List.of("reading", "books"), List.of("https://example.com/books1", "https://example.com/books2"), "#FFC107"));
             System.out.println("Demo data initialized successfully!");
         };
     }
