@@ -2,12 +2,7 @@ package com.rmarcello.demo.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
 import com.rmarcello.note.beans.Note;
 import com.rmarcello.note.service.NoteService;
 
@@ -20,9 +15,6 @@ import static org.junit.jupiter.api.Assertions.*;
                     classes = com.rmarcello.note.SpringBootDemoApplication.class)
 class NoteServiceTest {
 
-    @Autowired
-    private TestRestTemplate restTemplate;
-
     private NoteService noteService;
 
     @BeforeEach
@@ -32,8 +24,8 @@ class NoteServiceTest {
 
     @Test
     void testGetAll() {
-        Note note1 = new Note(1, "Title1", "Content1", Arrays.asList("Label1"), Arrays.asList("URL1"));
-        Note note2 = new Note(2, "Title2", "Content2", Arrays.asList("Label2"), Arrays.asList("URL2"));
+        Note note1 = new Note(1, "Title1", "Content1", Arrays.asList("Label1"), Arrays.asList("URL1"), "#FF0000");
+        Note note2 = new Note(2, "Title2", "Content2", Arrays.asList("Label2"), Arrays.asList("URL2"), "#00FF00");
         noteService.add(note1);
         noteService.add(note2);
 
@@ -45,8 +37,8 @@ class NoteServiceTest {
 
     @Test
     void testGetById() {
-        Note note1 = new Note(1, "Title1", "Content1", Arrays.asList("Label1"), Arrays.asList("URL1"));
-        Note note2 = new Note(2, "Title2", "Content2", Arrays.asList("Label2"), Arrays.asList("URL2"));
+        Note note1 = new Note(1, "Title1", "Content1", Arrays.asList("Label1"), Arrays.asList("URL1"), "#FF0000");
+        Note note2 = new Note(2, "Title2", "Content2", Arrays.asList("Label2"), Arrays.asList("URL2"), "#00FF00");
         noteService.add(note1);
         noteService.add(note2);
 
@@ -57,7 +49,7 @@ class NoteServiceTest {
 
     @Test
     void testAdd() {
-        Note note = new Note(1, "Title1", "Content1", Arrays.asList("Label1"), Arrays.asList("URL1"));
+        Note note = new Note(1, "Title1", "Content1", Arrays.asList("Label1"), Arrays.asList("URL1"), "#FF0000");
         noteService.add(note);
 
         List<Note> notes = noteService.getAll();
@@ -67,8 +59,8 @@ class NoteServiceTest {
 
     @Test
     void testRemove() {
-        Note note1 = new Note(1, "Title1", "Content1", Arrays.asList("Label1"), Arrays.asList("URL1"));
-        Note note2 = new Note(2, "Title2", "Content2", Arrays.asList("Label2"), Arrays.asList("URL2"));
+        Note note1 = new Note(1, "Title1", "Content1", Arrays.asList("Label1"), Arrays.asList("URL1"), "#FF0000");
+        Note note2 = new Note(2, "Title2", "Content2", Arrays.asList("Label2"), Arrays.asList("URL2"), "#00FF00");
         noteService.add(note1);
         noteService.add(note2);
 
@@ -81,9 +73,9 @@ class NoteServiceTest {
 
     @Test
     void testGetByLabel() {
-        Note note1 = new Note(1, "Title1", "Content1", Arrays.asList("Label1"), Arrays.asList("URL1"));
-        Note note2 = new Note(2, "Title2", "Content2", Arrays.asList("Label2"), Arrays.asList("URL2"));
-        Note note3 = new Note(3, "Title3", "Content3", Arrays.asList("Label1"), Arrays.asList("URL3"));
+        Note note1 = new Note(1, "Title1", "Content1", Arrays.asList("Label1"), Arrays.asList("URL1"), "#FF0000");
+        Note note2 = new Note(2, "Title2", "Content2", Arrays.asList("Label2"), Arrays.asList("URL2"), "#00FF00");
+        Note note3 = new Note(3, "Title3", "Content3", Arrays.asList("Label1"), Arrays.asList("URL3"), "#0000FF");
         noteService.add(note1);
         noteService.add(note2);
         noteService.add(note3);
@@ -96,10 +88,10 @@ class NoteServiceTest {
 
     @Test
     void testUpdate() {
-        Note note1 = new Note(1, "Title1", "Content1", Arrays.asList("Label1"), Arrays.asList("URL1"));
+        Note note1 = new Note(1, "Title1", "Content1", Arrays.asList("Label1"), Arrays.asList("URL1"), "#FF0000");
         noteService.add(note1);
 
-        Note updatedNote = new Note(1, "Updated Title", "Updated Content", Arrays.asList("Updated Label"), Arrays.asList("Updated URL"));
+        Note updatedNote = new Note(1, "Updated Title", "Updated Content", Arrays.asList("Updated Label"), Arrays.asList("Updated URL"), "#00FF00");
         Note result = noteService.update(1, updatedNote);
 
         assertNotNull(result);
@@ -107,6 +99,7 @@ class NoteServiceTest {
         assertEquals("Updated Content", result.getContent());
         assertEquals(Arrays.asList("Updated Label"), result.getLabels());
         assertEquals(Arrays.asList("Updated URL"), result.getUrls());
+        assertEquals("#00FF00", result.getColor());
 
         Note notFoundNote = noteService.update(2, updatedNote);
         assertNull(notFoundNote);
