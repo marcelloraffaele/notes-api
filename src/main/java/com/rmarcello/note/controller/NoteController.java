@@ -37,8 +37,8 @@ public class NoteController {
     }
 
     @PostMapping
-    public void addNote(@RequestBody Note note) {
-        noteService.add(note);
+    public Note addNote(@RequestBody Note note) {
+        return noteService.add(note);
     }
 
     @DeleteMapping("/{id}")

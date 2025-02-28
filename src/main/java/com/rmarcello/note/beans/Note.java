@@ -3,14 +3,14 @@ package com.rmarcello.note.beans;
 import java.util.List;
 
 public class Note implements Comparable<Note> {
-    private int id;
+    private long id;
     private String title;
     private String content;
     private List<String> labels;
     private List<String> urls;
     private String color; // P9ed3
 
-    public Note(int id, String title, String content, List<String> labels, List<String> urls, String color) { // Pbb5e
+    public Note(long id, String title, String content, List<String> labels, List<String> urls, String color) { // Pbb5e
         this.id = id;
         this.title = title;
         this.content = content;
@@ -27,11 +27,11 @@ public class Note implements Comparable<Note> {
         this.color = color; // Pbb5e
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

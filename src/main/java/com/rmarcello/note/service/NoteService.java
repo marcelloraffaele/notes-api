@@ -24,8 +24,18 @@ public class NoteService {
                 .orElse(null);
     }
 
-    public void add(Note note) {
+    public Note add(Note note) {
+        long newId = getNextId();
+        note.setId(newId);
         notes.add(note);
+        return note;
+    }
+
+    private long getNextId() {
+        return notes.stream()
+                .mapToLong(Note::getId)
+                .max()
+                .orElse(0) + 1;
     }
 
     public void remove(int id) {
