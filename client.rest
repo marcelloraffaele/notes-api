@@ -8,21 +8,10 @@ curl -X GET http://localhost:8080/notes
 curl -X POST http://localhost:8080/notes \
     -H "Content-Type: application/json" \
     -d '{
-        "id": 1,
         "title": "Sample Note",
         "content": "This is a sample note.",
         "labels": ["sample", "ai", "green"],
         "urls": ["http://example.com"]
-    }'
-### create a note 2
-curl -X POST http://localhost:8080/notes \
-    -H "Content-Type: application/json" \
-    -d '{
-        "id": 2,
-        "title": "Sample Note 2",
-        "content": "This is a sample note.",
-        "labels": ["sample", "ai", "red"],
-        "urls": ["http://example2.com"]
     }'
 
 ### get a note
