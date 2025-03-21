@@ -1,0 +1,1 @@
+Analyze the code and fix all issues reported by SonarQube, including but not limited to code smells, bugs, vulnerabilities, and security hotspots. Ensure that the fixes adhere to best practices, maintain readability, and do not introduce new issues. Provide comments explaining the changes where necessary.
