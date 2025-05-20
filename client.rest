@@ -4,7 +4,18 @@ curl http://localhost:8080/v3/api-docs
 ### list all notes
 curl -X GET http://localhost:8080/notes
 
-### create a note
+### create a note with creationDate
+curl -X POST http://localhost:8080/notes \
+    -H "Content-Type: application/json" \
+    -d '{
+        "title": "Sample Note with Date",
+        "content": "This is a sample note with creation date.",
+        "labels": ["sample", "date"],
+        "urls": ["http://example.com"],
+        "creationDate": "2025-01-15T10:30:00"
+    }'
+
+### create a note without creationDate
 curl -X POST http://localhost:8080/notes \
     -H "Content-Type: application/json" \
     -d '{
@@ -31,5 +42,6 @@ curl -X PUT http://localhost:8080/notes/1 \
         "title": "Updated Sample Note",
         "content": "This is an updated sample note.",
         "labels": ["sample", "ai", "blue"],
-        "urls": ["http://another.com"]
+        "urls": ["http://another.com"],
+        "creationDate": "2025-02-20T15:45:00"
     }'
