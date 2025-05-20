@@ -1,5 +1,6 @@
 package com.rmarcello.note.beans;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Note implements Comparable<Note> {
@@ -9,8 +10,13 @@ public class Note implements Comparable<Note> {
     private List<String> labels;
     private List<String> urls;
     private String color; // P9ed3
+    private LocalDateTime creationDate;
 
     public Note(long id, String title, String content, List<String> labels, List<String> urls, String color) { // Pbb5e
+        this(id, title, content, labels, urls, color, null);
+    }
+
+    public Note(long id, String title, String content, List<String> labels, List<String> urls, String color, LocalDateTime creationDate) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -25,6 +31,7 @@ public class Note implements Comparable<Note> {
             this.urls = urls;
         }
         this.color = color; // Pbb5e
+        this.creationDate = creationDate;
     }
 
     public long getId() {
@@ -75,6 +82,14 @@ public class Note implements Comparable<Note> {
         this.color = color;
     }
 
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
+
     @Override
     public String toString() {
         return "Note{" +
@@ -84,6 +99,7 @@ public class Note implements Comparable<Note> {
                 ", labels=" + labels +
                 ", urls=" + urls +
                 ", color='" + color + '\'' + // Pd1a7
+                (creationDate != null ? ", creationDate=" + creationDate : "") +
                 '}';
     }
 
