@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.rmarcello.note.beans.Note;
 import com.rmarcello.note.service.NoteService;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -103,6 +104,31 @@ class NoteServiceTest {
 
         Note notFoundNote = noteService.update(2, updatedNote);
         assertNull(notFoundNote);
+    }
+
+    @Test
+    void testCreationDate() {
+        LocalDateTime now = LocalDateTime.now();
+        Note note = new Note(1, "Title1", "Content1", Arrays.asList("Label1"), Arrays.asList("URL1"), "#FF0000", now);
+        noteService.add(note);
+
+        // Test that creationDate is stored and retrieved correctly
+        Note foundNote = noteService.getById(1);
+        assertNotNull(foundNote);
+        assertEquals(now, foundNote.getCreationDate());
+
+        // Test that creationDate is included in toString()
+        assertTrue(foundNote.toString().contains("creationDate=" + now));
+
+        // Test updating a note with a creation date
+        LocalDateTime updatedTime = now.plusHours(1);
+        Note updatedNote = new Note(1, "Updated Title", "Updated Content", 
+                                   Arrays.asList("Updated Label"), Arrays.asList("Updated URL"), 
+                                   "#00FF00", updatedTime);
+        Note result = noteService.update(1, updatedNote);
+        
+        assertNotNull(result);
+        assertEquals(updatedTime, result.getCreationDate());
     }
 
 }

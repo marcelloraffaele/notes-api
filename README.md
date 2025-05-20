@@ -45,6 +45,7 @@ Each note has the following fields:
 - `labels`: A list of labels associated with the note.
 - `urls`: A list of URLs associated with the note.
 - `color` (optional): The color of the note, which must be a valid HTML hex color code.
+- `creationDate` (optional): The date and time when the note was created.
 
 ### Examples of valid HTML hex color codes:
 - Black: `#000000`

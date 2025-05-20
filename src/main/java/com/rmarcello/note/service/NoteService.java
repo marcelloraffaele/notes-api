@@ -58,6 +58,9 @@ public class NoteService {
         existingNote.setLabels(updatedNote.getLabels());
         existingNote.setUrls(updatedNote.getUrls());
         existingNote.setColor(updatedNote.getColor());
+        if (updatedNote.getCreationDate() != null) {
+            existingNote.setCreationDate(updatedNote.getCreationDate());
+        }
         return existingNote;
     }
 }
