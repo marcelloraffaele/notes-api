@@ -1,14 +1,29 @@
 package com.rmarcello.note.beans;
 
 import java.util.List;
+import jakarta.validation.constraints.*;
 
 public class Note implements Comparable<Note> {
     private long id;
+    
+    @NotBlank(message = "Title is required")
+    @Size(max = 200, message = "Title must not exceed 200 characters")
     private String title;
+    
+    @NotBlank(message = "Content is required")
+    @Size(max = 5000, message = "Content must not exceed 5000 characters")
     private String content;
-    private List<String> labels;
-    private List<String> urls;
-    private String color; // P9ed3
+    
+    @NotNull(message = "Labels cannot be null")
+    @Size(max = 10, message = "Maximum 10 labels allowed")
+    private List<@NotBlank @Size(max = 50) String> labels;
+    
+    @NotNull(message = "URLs cannot be null")
+    @Size(max = 5, message = "Maximum 5 URLs allowed")
+    private List<@Pattern(regexp = "^https?://.*", message = "URLs must start with http:// or https://") String> urls;
+    
+    @Pattern(regexp = "^#[0-9A-Fa-f]{6}$", message = "Color must be a valid hex color code (e.g., #FF0000)")
+    private String color;
 
     public Note(long id, String title, String content, List<String> labels, List<String> urls, String color) { // Pbb5e
         this.id = id;
