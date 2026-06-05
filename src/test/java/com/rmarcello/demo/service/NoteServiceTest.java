@@ -58,6 +58,24 @@ class NoteServiceTest {
     }
 
     @Test
+    void testAddDuplicateId() {
+        // Add first note with ID 1
+        Note note1 = new Note(1, "Title1", "Content1", Arrays.asList("Label1"), Arrays.asList("URL1"), "#FF0000");
+        noteService.add(note1);
+        
+        // Try to add another note with the same ID
+        Note note2 = new Note(1, "Title2", "Content2", Arrays.asList("Label2"), Arrays.asList("URL2"), "#00FF00");
+        
+        // Verify the exception is thrown with the correct message
+        IllegalArgumentException exception = assertThrows(
+            IllegalArgumentException.class,
+            () -> noteService.add(note2)
+        );
+        
+        assertEquals("item already present", exception.getMessage());
+    }
+
+    @Test
     void testRemove() {
         Note note1 = new Note(1, "Title1", "Content1", Arrays.asList("Label1"), Arrays.asList("URL1"), "#FF0000");
         Note note2 = new Note(2, "Title2", "Content2", Arrays.asList("Label2"), Arrays.asList("URL2"), "#00FF00");
