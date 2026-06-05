@@ -1,14 +1,25 @@
 package com.rmarcello.note.beans;
 
 import java.util.List;
+import jakarta.validation.constraints.*;
 
 public class Note implements Comparable<Note> {
     private long id;
+    
+    @NotBlank(message = "Title is required")
+    @Size(max = 255, message = "Title must not exceed 255 characters")
     private String title;
+    
+    @NotBlank(message = "Content is required")
+    @Size(max = 5000, message = "Content must not exceed 5000 characters")
     private String content;
-    private List<String> labels;
-    private List<String> urls;
-    private String color; // P9ed3
+    
+    private List<@Pattern(regexp = "^[a-zA-Z0-9_-]{1,50}$", message = "Label must contain only alphanumeric characters, hyphens, and underscores, max 50 characters") String> labels;
+    
+    private List<@Pattern(regexp = "^https?://[\\w\\-]+(\\.[\\w\\-]+)+([\\w\\-\\.,@?^=%&:/~\\+#]*[\\w\\-\\@?^=%&/~\\+#])?$", message = "Invalid URL format") String> urls;
+    
+    @Pattern(regexp = "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$", message = "Color must be a valid hex color code (e.g., #FF0000 or #F00)")
+    private String color;
 
     public Note(long id, String title, String content, List<String> labels, List<String> urls, String color) { // Pbb5e
         this.id = id;
