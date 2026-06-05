@@ -1,35 +1,101 @@
-### openapi definition
-curl http://localhost:8080/v3/api-docs
+### Notes API Security Examples
 
-### list all notes
-curl -X GET http://localhost:8080/notes
+### 1. Authentication - Login to get JWT token
+POST http://localhost:8080/auth/signin
+Content-Type: application/json
 
-### create a note
-curl -X POST http://localhost:8080/notes \
-    -H "Content-Type: application/json" \
-    -d '{
-        "title": "Sample Note",
-        "content": "This is a sample note.",
-        "labels": ["sample", "ai", "green"],
-        "urls": ["http://example.com"]
-    }'
+{
+    "username": "user",
+    "password": "password"
+}
 
-### get a note
-curl -X GET http://localhost:8080/notes/1
+### 2. Authentication - Admin login
+POST http://localhost:8080/auth/signin
+Content-Type: application/json
 
-### delete a note
-curl -X DELETE http://localhost:8080/notes/1
+{
+    "username": "admin", 
+    "password": "admin"
+}
 
-### search notes
-curl -X GET http://localhost:8080/notes/label/fitness
+### 3. Unauthenticated access (should return 401)
+GET http://localhost:8080/notes
 
-### update a note
-curl -X PUT http://localhost:8080/notes/1 \
-    -H "Content-Type: application/json" \
-    -d '{
-        "id": 1,
-        "title": "Updated Sample Note",
-        "content": "This is an updated sample note.",
-        "labels": ["sample", "ai", "blue"],
-        "urls": ["http://another.com"]
-    }'
+### 4. List all notes (authenticated)
+GET http://localhost:8080/notes
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyIiwiaWF0IjoxNjc4OTI4ODAwLCJleHAiOjE2NzkwMTUyMDB9.your-jwt-token-here
+
+### 5. Get a specific note (authenticated)
+GET http://localhost:8080/notes/1
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyIiwiaWF0IjoxNjc4OTI4ODAwLCJleHAiOjE2NzkwMTUyMDB9.your-jwt-token-here
+
+### 6. Create a note with valid data (authenticated)
+POST http://localhost:8080/notes
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyIiwiaWF0IjoxNjc4OTI4ODAwLCJleHAiOjE2NzkwMTUyMDB9.your-jwt-token-here
+Content-Type: application/json
+
+{
+    "title": "Secure Note",
+    "content": "This note was created with proper authentication and validation",
+    "labels": ["security", "test"],
+    "urls": ["https://example.com/secure"],
+    "color": "#00FF00"
+}
+
+### 7. Create a note with invalid data (should return validation errors)
+POST http://localhost:8080/notes
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyIiwiaWF0IjoxNjc4OTI4ODAwLCJleHAiOjE2NzkwMTUyMDB9.your-jwt-token-here
+Content-Type: application/json
+
+{
+    "title": "",
+    "content": "",
+    "labels": ["test"],
+    "urls": ["invalid-url"],
+    "color": "invalid-color"
+}
+
+### 8. Update a note (authenticated)
+PUT http://localhost:8080/notes/1
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyIiwiaWF0IjoxNjc4OTI4ODAwLCJleHAiOjE2NzkwMTUyMDB9.your-jwt-token-here
+Content-Type: application/json
+
+{
+    "title": "Updated Secure Note",
+    "content": "This note has been updated securely",
+    "labels": ["security", "updated"],
+    "urls": ["https://example.com/updated"],
+    "color": "#FF0000"
+}
+
+### 9. Delete a note (authenticated)
+DELETE http://localhost:8080/notes/1
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyIiwiaWF0IjoxNjc4OTI4ODAwLCJleHAiOjE2NzkwMTUyMDB9.your-jwt-token-here
+
+### 10. Search notes by label (authenticated)
+GET http://localhost:8080/notes/label/security
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyIiwiaWF0IjoxNjc4OTI4ODAwLCJleHAiOjE2NzkwMTUyMDB9.your-jwt-token-here
+
+### 11. Logout (authenticated)
+POST http://localhost:8080/auth/signout
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyIiwiaWF0IjoxNjc4OTI4ODAwLCJleHAiOjE2NzkwMTUyMDB9.your-jwt-token-here
+
+### 12. OpenAPI definition (public)
+GET http://localhost:8080/v3/api-docs
+
+### 13. Swagger UI (public)
+GET http://localhost:8080/swagger-ui/index.html
+
+### 14. Test CORS preflight request
+OPTIONS http://localhost:8080/notes
+Origin: http://localhost:3000
+Access-Control-Request-Method: GET
+Access-Control-Request-Headers: Authorization
+
+### Security Features Demonstrated:
+# 1. JWT Authentication - All endpoints require valid Bearer token
+# 2. Input Validation - Invalid data returns structured error responses
+# 3. Rate Limiting - Multiple rapid requests will return 429 status
+# 4. CORS Security - Only localhost origins allowed
+# 5. Security Headers - X-Frame-Options, Content-Type-Options, etc.
+# 6. Audit Logging - All requests logged with user/IP context

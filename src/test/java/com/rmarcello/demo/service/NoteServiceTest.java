@@ -3,6 +3,7 @@ package com.rmarcello.demo.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 import com.rmarcello.note.beans.Note;
 import com.rmarcello.note.service.NoteService;
 
@@ -13,6 +14,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
                     classes = com.rmarcello.note.SpringBootDemoApplication.class)
+@TestPropertySource(properties = {
+    "spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration"
+})
 class NoteServiceTest {
 
     private NoteService noteService;
