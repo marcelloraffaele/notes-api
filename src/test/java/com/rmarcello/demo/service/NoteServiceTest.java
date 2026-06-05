@@ -11,6 +11,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.rmarcello.note.exception.NoteAlreadyPresentException;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
                     classes = com.rmarcello.note.SpringBootDemoApplication.class)
 class NoteServiceTest {
@@ -103,6 +105,16 @@ class NoteServiceTest {
 
         Note notFoundNote = noteService.update(2, updatedNote);
         assertNull(notFoundNote);
+    }
+
+    @Test
+    void testAddDuplicate() {
+        Note note1 = new Note(1, "Title1", "Content1", Arrays.asList("Label1"), Arrays.asList("URL1"), "#FF0000");
+        noteService.add(note1);
+        assertEquals(1, noteService.getAll().size());
+
+        Note note2 = new Note(1, "Title2", "Content2", Arrays.asList("Label2"), Arrays.asList("URL2"), "#00FF00");
+        assertThrows(NoteAlreadyPresentException.class, () -> noteService.add(note2));
     }
 
 }

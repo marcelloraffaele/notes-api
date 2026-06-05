@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rmarcello.note.beans.Note;
+import com.rmarcello.note.exception.NoteAlreadyPresentException;
 import com.rmarcello.note.service.NoteService;
 
 import java.util.List;
@@ -37,8 +38,12 @@ public class NoteController {
     }
 
     @PostMapping
-    public Note addNote(@RequestBody Note note) {
-        return noteService.add(note);
+    public ResponseEntity<Note> addNote(@RequestBody Note note) {
+        try {
+            return new ResponseEntity<>(noteService.add(note), HttpStatus.CREATED);
+        } catch (NoteAlreadyPresentException e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
     }
 
     @DeleteMapping("/{id}")
