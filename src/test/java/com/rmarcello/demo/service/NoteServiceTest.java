@@ -91,7 +91,7 @@ class NoteServiceTest {
         Note note1 = new Note(1, "Title1", "Content1", Arrays.asList("Label1"), Arrays.asList("URL1"), "#FF0000");
         noteService.add(note1);
 
-        Note updatedNote = new Note(1, "Updated Title", "Updated Content", Arrays.asList("Updated Label"), Arrays.asList("Updated URL"), "#00FF00");
+        Note updatedNote = new Note(1, "Updated Title", "Updated Content", Arrays.asList("Updated Label"), Arrays.asList("Updated URL"), "#00FF00", "💡", "https://example.com/image.jpg");
         Note result = noteService.update(1, updatedNote);
 
         assertNotNull(result);
@@ -100,6 +100,14 @@ class NoteServiceTest {
         assertEquals(Arrays.asList("Updated Label"), result.getLabels());
         assertEquals(Arrays.asList("Updated URL"), result.getUrls());
         assertEquals("#00FF00", result.getColor());
+        assertEquals("💡", result.getEmoji());
+        assertEquals("https://example.com/image.jpg", result.getImageUrl());
+
+        updatedNote.setEmoji(null);
+        updatedNote.setImageUrl(null);
+        result = noteService.update(1, updatedNote);
+        assertNull(result.getEmoji());
+        assertNull(result.getImageUrl());
 
         Note notFoundNote = noteService.update(2, updatedNote);
         assertNull(notFoundNote);
