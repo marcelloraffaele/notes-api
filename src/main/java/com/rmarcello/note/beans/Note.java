@@ -23,8 +23,7 @@ public class Note implements Comparable<Note> {
     @Schema(description = "Optional emoji associated with the note", example = "💡")
     private String emoji;
     @Size(max = 2048, message = "Image URL must not exceed 2048 characters")
-    @URL(message = "Image URL must be a valid URL")
-    @Pattern(regexp = "^https?://.*$", message = "Image URL must use HTTP(S)")
+    @URL(regexp = "^https?://.*$", message = "Image URL must be a valid HTTP(S) URL")
     @Schema(description = "Optional HTTP(S) image URL associated with the note", example = "https://example.com/image.jpg")
     private String imageUrl;
     @Min(value = 0, message = "Priority must be between 0 and 5")
