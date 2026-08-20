@@ -18,6 +18,8 @@ import com.rmarcello.note.service.NoteService;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
+
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/notes")
@@ -37,7 +39,7 @@ public class NoteController {
     }
 
     @PostMapping
-    public Note addNote(@RequestBody Note note) {
+    public Note addNote(@Valid @RequestBody Note note) {
         return noteService.add(note);
     }
 
@@ -52,7 +54,7 @@ public class NoteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Note> updateNote(@PathVariable int id, @RequestBody Note note) {
+    public ResponseEntity<Note> updateNote(@PathVariable int id, @Valid @RequestBody Note note) {
         Note updatedNote = noteService.update(id, note);
         if (updatedNote == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

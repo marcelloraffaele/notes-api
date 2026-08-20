@@ -58,6 +58,9 @@ public class NoteService {
         existingNote.setLabels(updatedNote.getLabels());
         existingNote.setUrls(updatedNote.getUrls());
         existingNote.setColor(updatedNote.getColor());
+        existingNote.setEmoji(updatedNote.getEmoji());
+        existingNote.setImageUrl(updatedNote.getImageUrl());
+        existingNote.setPriority(updatedNote.getPriority());
         return existingNote;
     }
 }
