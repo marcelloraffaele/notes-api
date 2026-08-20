@@ -91,7 +91,7 @@ class NoteServiceTest {
         Note note1 = new Note(1, "Title1", "Content1", Arrays.asList("Label1"), Arrays.asList("URL1"), "#FF0000");
         noteService.add(note1);
 
-        Note updatedNote = new Note(1, "Updated Title", "Updated Content", Arrays.asList("Updated Label"), Arrays.asList("Updated URL"), "#00FF00", "💡", "https://example.com/image.jpg");
+        Note updatedNote = new Note(1, "Updated Title", "Updated Content", Arrays.asList("Updated Label"), Arrays.asList("Updated URL"), "#00FF00", "💡", "https://example.com/image.jpg", 3);
         Note result = noteService.update(1, updatedNote);
 
         assertNotNull(result);
@@ -102,6 +102,7 @@ class NoteServiceTest {
         assertEquals("#00FF00", result.getColor());
         assertEquals("💡", result.getEmoji());
         assertEquals("https://example.com/image.jpg", result.getImageUrl());
+        assertEquals(3, result.getPriority());
 
         updatedNote.setEmoji(null);
         updatedNote.setImageUrl(null);

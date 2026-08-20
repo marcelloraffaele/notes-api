@@ -60,6 +60,7 @@ public class NoteService {
         existingNote.setColor(updatedNote.getColor());
         existingNote.setEmoji(updatedNote.getEmoji());
         existingNote.setImageUrl(updatedNote.getImageUrl());
+        existingNote.setPriority(updatedNote.getPriority());
         return existingNote;
     }
 }

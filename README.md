@@ -47,6 +47,7 @@ Each note has the following fields:
 - `color` (optional): The color of the note, which must be a valid HTML hex color code.
 - `emoji` (optional): An emoji associated with the note (up to 32 characters).
 - `imageUrl` (optional): An HTTP(S) image URL (up to 2048 characters).
+- `priority`: An integer from 0 (lowest) to 5 (highest), defaulting to 0.
 
 ### Examples of valid HTML hex color codes:
 - Black: `#000000`

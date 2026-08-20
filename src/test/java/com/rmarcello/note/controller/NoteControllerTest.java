@@ -24,34 +24,36 @@ class NoteControllerTest {
     @Test
     void createsUpdatesAndRemovesOptionalMetadata() throws Exception {
         String note = """
-                {"title":"Idea","content":"Content","labels":[],"urls":[],"emoji":"💡",
-                "imageUrl":"https://example.com/image.jpg"}""";
+                {"title":"Idea","content":"Content","labels":[],"urls":[],"emoji":"⭐",
+                "imageUrl":"https://example.com/image.jpg","priority":3}""";
 
         String response = mockMvc.perform(post("/notes")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(note))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.emoji").value("💡"))
+                .andExpect(jsonPath("$.emoji").value("⭐"))
                 .andExpect(jsonPath("$.imageUrl").value("https://example.com/image.jpg"))
+                .andExpect(jsonPath("$.priority").value(3))
                 .andReturn().getResponse().getContentAsString();
 
         long id = ((Number) com.jayway.jsonpath.JsonPath.read(response, "$.id")).longValue();
         String updatedNote = """
-                {"title":"Idea","content":"Content","labels":[],"urls":[],"emoji":null,"imageUrl":null}""";
+                {"title":"Idea","content":"Content","labels":[],"urls":[],"emoji":null,"imageUrl":null,"priority":0}""";
 
         mockMvc.perform(put("/notes/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(updatedNote))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.emoji").doesNotExist())
-                .andExpect(jsonPath("$.imageUrl").doesNotExist());
+                .andExpect(jsonPath("$.imageUrl").doesNotExist())
+                .andExpect(jsonPath("$.priority").value(0));
     }
 
     @Test
     void rejectsInvalidOptionalMetadata() throws Exception {
         String invalidNote = """
                 {"title":"Idea","content":"Content","labels":[],"urls":[],"emoji":"not-an-emoji",
-                "imageUrl":"not-a-url"}""";
+                "imageUrl":"not-a-url","priority":6}""";
 
         mockMvc.perform(post("/notes")
                         .contentType(MediaType.APPLICATION_JSON)
