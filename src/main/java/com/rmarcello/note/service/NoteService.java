@@ -1,15 +1,12 @@
 package com.rmarcello.note.service;
 
-import org.springframework.stereotype.Service;
-
 import com.rmarcello.note.beans.Note;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
-public class NoteService {
+public class NoteService implements NoteOperations {
 
     private List<Note> notes = new ArrayList<>();
 

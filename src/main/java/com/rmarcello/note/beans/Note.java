@@ -10,6 +10,10 @@ public class Note implements Comparable<Note> {
     private List<String> urls;
     private String color; // P9ed3
 
+    public Note() {
+        this(0, null, null, null, null, null);
+    }
+
     public Note(long id, String title, String content, List<String> labels, List<String> urls, String color) { // Pbb5e
         this.id = id;
         this.title = title;
@@ -56,7 +60,7 @@ public class Note implements Comparable<Note> {
     }
 
     public void setLabels(List<String> labels) {
-        this.labels = labels;
+        this.labels = labels == null ? List.of() : labels;
     }
 
     public List<String> getUrls() {
@@ -64,7 +68,7 @@ public class Note implements Comparable<Note> {
     }
 
     public void setUrls(List<String> urls) {
-        this.urls = urls;
+        this.urls = urls == null ? List.of() : urls;
     }
 
     public String getColor() { // Pab1e

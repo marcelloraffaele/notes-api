@@ -11,7 +11,8 @@ curl -X POST http://localhost:8080/notes \
         "title": "Sample Note",
         "content": "This is a sample note.",
         "labels": ["sample", "ai", "green"],
-        "urls": ["http://example.com"]
+        "urls": ["http://example.com"],
+        "color": "#FF5733"
     }'
 
 ### get a note
