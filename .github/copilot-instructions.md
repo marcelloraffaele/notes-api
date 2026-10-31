@@ -1,5 +1,4 @@
-Start all chats with `🤖 GitHub Copilot 😄`
-
+# Notes API Copilot Instructions
 
 ## Stack
 - Java (Spring Boot)

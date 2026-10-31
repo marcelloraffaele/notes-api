@@ -10,8 +10,8 @@ To run the application from the command line, follow these steps:
 
 1. Clone the repository from GitHub:
    ```sh
-   git clone https://github.com/marcelloraffaele/spring-boot-demo.git
-   cd spring-boot-demo
+   git clone https://github.com/marcelloraffaele/notes-api.git
+   cd notes-api
    ```
 
 2. Build the project using Maven:
