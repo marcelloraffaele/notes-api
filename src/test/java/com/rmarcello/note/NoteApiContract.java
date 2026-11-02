@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rmarcello.note.beans.Note;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.contains;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -65,8 +66,8 @@ public abstract class NoteApiContract {
                     .andExpect(jsonPath("$.id").value(id))
                     .andExpect(jsonPath("$.title").value("Updated title"))
                     .andExpect(jsonPath("$.content").value("Updated content"))
-                    .andExpect(jsonPath("$.labels").value(List.of("new-label")))
-                    .andExpect(jsonPath("$.urls").value(List.of("https://example.com/new")))
+                    .andExpect(jsonPath("$.labels").value(contains("new-label")))
+                    .andExpect(jsonPath("$.urls").value(contains("https://example.com/new")))
                     .andExpect(jsonPath("$.color").value("#654321"));
             mockMvc.perform(get("/notes/label/contract"))
                     .andExpect(status().isOk())

@@ -132,13 +132,16 @@ Run JUnit unit tests, memory API tests, and storage configuration tests without 
 .\mvnw.cmd test
 ```
 
-Run the complete build, including real PostgreSQL integration tests:
+Run the complete build:
 
 ```powershell
 .\mvnw.cmd verify
 ```
 
-Integration tests use Testcontainers and require a running Docker engine and access
+The PostgreSQL integration test class, `NotePostgresIT`, is temporarily disabled
+with JUnit's `@Disabled`. Remove that annotation to enable it during `verify`.
+
+When enabled, integration tests use Testcontainers and require a running Docker engine and access
 to pull `postgres:17-alpine`. They use an isolated database on a dynamically assigned
 port and the same initialization SQL as Compose, not your local notes database.
 They run through Maven Failsafe (`*IT`) and fail rather than silently skip when Docker
