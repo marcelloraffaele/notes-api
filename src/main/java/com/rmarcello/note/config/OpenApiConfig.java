@@ -12,7 +12,7 @@ public class OpenApiConfig {
         return new OpenAPI()
             .info(new Info()
                 .title("Note API")
-                .version("1.0")
+                .version("1.1")
                 .description("API documentation for Note API application"));
     }
 }

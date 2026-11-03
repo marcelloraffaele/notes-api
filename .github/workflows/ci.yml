@@ -4,11 +4,17 @@ on:
   push:
     paths:
       - 'src/**'
+      - '.github/workflows/ci.yml'
+      - 'pom.xml'
+      - 'Dockerfile'
     branches:
       - main
   pull_request:
     paths:
       - 'src/**'
+      - '.github/workflows/ci.yml'
+      - 'pom.xml'
+      - 'Dockerfile'
     branches:
       - main
       
@@ -22,10 +28,10 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7.0.1
 
       - name: Set up Java
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v6.1.0
         with:
           java-version: '21'
           distribution: 'temurin'
@@ -39,7 +45,7 @@ jobs:
       - name: Login to GHCR
 # don't exec during PRs
         if: github.event_name == 'push'
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4.7.0
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
@@ -48,7 +54,7 @@ jobs:
       - name: Build and push Docker image
 # don't exec during PRs
         if: github.event_name == 'push'
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v7.4.0
         with:
           context: .
           push: true
