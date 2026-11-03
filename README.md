@@ -124,6 +124,17 @@ if you need to preserve your notes.
 
 To return to temporary storage, set `$env:NOTES_STORAGE = "memory"` and restart the API.
 
+### To run the complete application with Docker Compose
+
+```shell
+export POSTGRES_USER="notes"
+export POSTGRES_PASSWORD=$(read -sp "Choose a local development database password: " && echo $REPLY)
+
+docker compose -f compose-complete.yml up -d
+```
+
+navigate to `http://localhost:8081` in your browser to access the Notes UI.
+
 ## Tests
 
 Run JUnit unit tests, memory API tests, and storage configuration tests without Docker:
