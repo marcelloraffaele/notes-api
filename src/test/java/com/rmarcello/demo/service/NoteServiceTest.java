@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.rmarcello.note.beans.Note;
 import com.rmarcello.note.service.NoteService;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -103,6 +104,64 @@ class NoteServiceTest {
 
         Note notFoundNote = noteService.update(2, updatedNote);
         assertNull(notFoundNote);
+    }
+
+    @Test
+    void testCreationDateAutoSet() {
+        LocalDateTime before = LocalDateTime.now();
+        Note note = new Note(1, "Title1", "Content1", Arrays.asList("Label1"), Arrays.asList("URL1"), "#FF0000");
+        LocalDateTime after = LocalDateTime.now();
+
+        assertNotNull(note.getCreationDate());
+        assertTrue(note.getCreationDate().isAfter(before) || note.getCreationDate().isEqual(before));
+        assertTrue(note.getCreationDate().isBefore(after) || note.getCreationDate().isEqual(after));
+    }
+
+    @Test
+    void testCreationDateExplicitSet() {
+        LocalDateTime specificDate = LocalDateTime.of(2023, 1, 1, 12, 0, 0);
+        Note note = new Note(1, "Title1", "Content1", Arrays.asList("Label1"), Arrays.asList("URL1"), "#FF0000", specificDate);
+
+        assertEquals(specificDate, note.getCreationDate());
+    }
+
+    @Test
+    void testCreationDateInToString() {
+        LocalDateTime specificDate = LocalDateTime.of(2023, 1, 1, 12, 0, 0);
+        Note note = new Note(1, "Title1", "Content1", Arrays.asList("Label1"), Arrays.asList("URL1"), "#FF0000", specificDate);
+
+        String toString = note.toString();
+        assertTrue(toString.contains("creationDate=" + specificDate));
+    }
+
+    @Test
+    void testUpdatePreservesCreationDate() {
+        LocalDateTime originalDate = LocalDateTime.of(2023, 1, 1, 12, 0, 0);
+        Note note1 = new Note(1, "Title1", "Content1", Arrays.asList("Label1"), Arrays.asList("URL1"), "#FF0000", originalDate);
+        noteService.add(note1);
+
+        // Update without creationDate (should preserve original) - create update note with null creationDate
+        Note updatedNote = new Note(1, "Updated Title", "Updated Content", Arrays.asList("Updated Label"), Arrays.asList("Updated URL"), "#00FF00");
+        updatedNote.setCreationDate(null); // Explicitly set to null to test preservation
+        Note result = noteService.update(1, updatedNote);
+
+        assertNotNull(result);
+        assertEquals(originalDate, result.getCreationDate());
+    }
+
+    @Test
+    void testUpdateWithCreationDate() {
+        LocalDateTime originalDate = LocalDateTime.of(2023, 1, 1, 12, 0, 0);
+        Note note1 = new Note(1, "Title1", "Content1", Arrays.asList("Label1"), Arrays.asList("URL1"), "#FF0000", originalDate);
+        noteService.add(note1);
+
+        // Update with new creationDate
+        LocalDateTime newDate = LocalDateTime.of(2023, 2, 1, 12, 0, 0);
+        Note updatedNote = new Note(1, "Updated Title", "Updated Content", Arrays.asList("Updated Label"), Arrays.asList("Updated URL"), "#00FF00", newDate);
+        Note result = noteService.update(1, updatedNote);
+
+        assertNotNull(result);
+        assertEquals(newDate, result.getCreationDate());
     }
 
 }

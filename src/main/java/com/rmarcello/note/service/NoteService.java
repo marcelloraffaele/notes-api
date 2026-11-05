@@ -2,6 +2,7 @@ package com.rmarcello.note.service;
 
 import com.rmarcello.note.beans.Note;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +25,10 @@ public class NoteService implements NoteOperations {
     public Note add(Note note) {
         long newId = getNextId();
         note.setId(newId);
+        // Set creationDate if not already set
+        if (note.getCreationDate() == null) {
+            note.setCreationDate(LocalDateTime.now());
+        }
         notes.add(note);
         return note;
     }
@@ -55,6 +60,10 @@ public class NoteService implements NoteOperations {
         existingNote.setLabels(updatedNote.getLabels());
         existingNote.setUrls(updatedNote.getUrls());
         existingNote.setColor(updatedNote.getColor());
+        // Only update creationDate if provided in the update request
+        if (updatedNote.getCreationDate() != null) {
+            existingNote.setCreationDate(updatedNote.getCreationDate());
+        }
         return existingNote;
     }
 }
