@@ -105,4 +105,34 @@ class NoteServiceTest {
         assertNull(notFoundNote);
     }
 
+    @Test
+    void testNoDuplicateIds() {
+        // Add multiple notes and verify each gets a unique ID
+        Note note1 = new Note(1, "Title1", "Content1", Arrays.asList("Label1"), Arrays.asList("URL1"), "#FF0000");
+        Note note2 = new Note(1, "Title2", "Content2", Arrays.asList("Label2"), Arrays.asList("URL2"), "#00FF00");
+        Note note3 = new Note(1, "Title3", "Content3", Arrays.asList("Label3"), Arrays.asList("URL3"), "#0000FF");
+        
+        noteService.add(note1);
+        noteService.add(note2);
+        noteService.add(note3);
+
+        // Verify that all notes have unique IDs
+        List<Note> allNotes = noteService.getAll();
+        assertEquals(3, allNotes.size());
+        
+        long id1 = allNotes.get(0).getId();
+        long id2 = allNotes.get(1).getId();
+        long id3 = allNotes.get(2).getId();
+        
+        // Verify all IDs are unique
+        assertNotEquals(id1, id2);
+        assertNotEquals(id1, id3);
+        assertNotEquals(id2, id3);
+        
+        // Verify each note can be retrieved by its unique ID
+        assertNotNull(noteService.getById((int) id1));
+        assertNotNull(noteService.getById((int) id2));
+        assertNotNull(noteService.getById((int) id3));
+    }
+
 }
